@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import "./App.css";
 
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
-import { AuthContext, AuthContextProvider } from "./context/AuthContext";
 import Navbar from "./Navbar";
 import Home from "./pages/Home";
 import { Login } from "./pages/Login";
@@ -10,6 +9,8 @@ import { Reg } from "./pages/Reg";
 import AuthorizedRoute from "./component/AuthorizedRoute";
 import NotAuthorizedRoute from "./component/NotAuthorizedRoute";
 import Cabinet from "./pages/Cabinet";
+import Issues from "./pages/Issues";
+import IssueComments from "./pages/IssueComments";
 
 function App() {
   // const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
@@ -22,6 +23,8 @@ function App() {
         <AuthorizedRoute path="/cabinet" component={Cabinet} />
         <NotAuthorizedRoute path="/login" component={Login} />
         <NotAuthorizedRoute path="/reg" component={Reg} />
+        <Route path="/issues" component={Issues}/>
+        <Route path="/issue-comments" component={IssueComments}/>
       </Switch>
     </BrowserRouter>
   );
