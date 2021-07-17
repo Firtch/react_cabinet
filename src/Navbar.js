@@ -21,6 +21,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import { TOKEN } from "./Data/TOKEN";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -82,7 +83,7 @@ export default function Navbar() {
       headers: {
         "Content-type": "application/json; charset=UTF-8",
         Authorization:
-          "Basic " + btoa("Firtch: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"),
+          "Basic " + btoa("Firtch:" + TOKEN),
       },
     }).then((response) => response.json());
   };

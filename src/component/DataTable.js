@@ -150,6 +150,9 @@ const DataTable = (props) => {
     },
   ];
 
+
+  console.log(props.issues);
+
   const importedIssues = props.issues.map((issue) => {
     return {
       id: issue.number,

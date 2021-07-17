@@ -11,6 +11,7 @@ import NotAuthorizedRoute from "./component/NotAuthorizedRoute";
 import Cabinet from "./pages/Cabinet";
 import Issues from "./pages/Issues";
 import IssueComments from "./pages/IssueComments";
+import NotFound from "./pages/NotFound";
 
 function App() {
   // const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
@@ -25,6 +26,8 @@ function App() {
         <NotAuthorizedRoute path="/reg" component={Reg} />
         <Route path="/issues" component={Issues}/>
         <Route path="/issue-comments" component={IssueComments}/>
+        <Route path="/404" component={NotFound} />
+        <Redirect fro0m="*" to="/404" />
       </Switch>
     </BrowserRouter>
   );

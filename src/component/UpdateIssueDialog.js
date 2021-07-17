@@ -7,6 +7,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { Edit } from "@material-ui/icons";
 import { TextField } from "@material-ui/core";
+import { TOKEN } from "../Data/TOKEN";
 
 export default function UpdateIssueDialog(props) {
   const [open, setOpen] = React.useState(false);
@@ -40,7 +41,7 @@ export default function UpdateIssueDialog(props) {
         headers: {
           "Content-type": "application/json; charset=UTF-8",
           Authorization:
-            "Basic " + btoa("Firtch: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"),
+            "Basic " + btoa("Firtch:" + TOKEN),
         },
       }
     ).then((response) => response.json());

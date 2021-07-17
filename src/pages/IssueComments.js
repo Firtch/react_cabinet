@@ -9,6 +9,7 @@ import Typography from "@material-ui/core/Typography";
 import moment from "moment";
 import { TextField } from "@material-ui/core";
 import { Form } from "../component/Form";
+import { TOKEN } from "../Data/TOKEN";
 
 class IssueComments extends React.Component {
   constructor(props) {
@@ -32,7 +33,7 @@ class IssueComments extends React.Component {
         method: "GET",
         headers: {
           Authorization:
-            "Basic " + btoa("Firtch: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"),
+            "Basic " + btoa("Firtch:" + TOKEN),
         },
       }).then((response) => response.json());
     };
@@ -49,7 +50,7 @@ class IssueComments extends React.Component {
         headers: {
           "Content-type": "application/json; charset=UTF-8",
           Authorization:
-            "Basic " + btoa("Firtch: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"),
+            "Basic " + btoa("Firtch:" + TOKEN),
         },
       }).then((response) => response.json());
     };

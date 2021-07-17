@@ -2,13 +2,14 @@ import { Button } from "@material-ui/core";
 import { Sync } from "@material-ui/icons";
 import React from "react";
 import DataTable from "../component/DataTable";
+import { TOKEN } from "../Data/TOKEN";
 
 const getIssuesPromise = () => {
     return fetch("https://api.github.com/repos/Firtch/react_cabinet/issues", {
       method: "GET",
       headers: {
         Authorization:
-          "Basic " + btoa("Firtch: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"),
+          "Basic " + btoa("Firtch:" + TOKEN),
       },
     }).then((response) => response.json());
   };
