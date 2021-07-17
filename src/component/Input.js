@@ -7,7 +7,7 @@ export const Input = React.forwardRef((props, ref) => {
       variant="outlined"
       margin="normal"
       inputRef={ref}
-      fullWidth
+      
       {...props}
     />
   );

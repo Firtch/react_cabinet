@@ -15,6 +15,7 @@ import { AuthContext } from "./context/AuthContext";
 import { Button } from "@material-ui/core";
 import { NavLink } from "react-router-dom";
 import Cookies from "universal-cookie";
+import { Link } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -51,21 +52,11 @@ export default function Navbar() {
   return (
     <div className={classes.root}>
       <FormGroup>
-        {/* <FormControlLabel
-          control={
-            <Switch
-              checked={isLoggedIn}
-              onChange={handleChange}
-              aria-label="login switch"
-            />
-          }
-          label={isLoggedIn ? "Logout" : "Login"}
-        /> */}
       </FormGroup>
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
-            Приложение Личный кабинет
+            Приложение "Личный кабинет"
           </Typography>
 
           {!isLoggedIn && (
@@ -81,8 +72,16 @@ export default function Navbar() {
 
           {isLoggedIn && (
             <div>
-              <Button color="inherit">Личный кабинет</Button>
-              <Button color="inherit" onClick={() => { cookies.remove("user"); setIsLoggedIn(false);}}>
+              <NavLink className="link" to="/cabinet">
+                <Button color="inherit">Личный кабинет</Button>
+              </NavLink>
+              <Button
+                color="inherit"
+                onClick={() => {
+                  cookies.remove("user");
+                  setIsLoggedIn(false);
+                }}
+              >
                 Выход
               </Button>
             </div>

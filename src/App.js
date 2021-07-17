@@ -9,14 +9,17 @@ import { Login } from "./pages/Login";
 import { Reg } from "./pages/Reg";
 import AuthorizedRoute from "./component/AuthorizedRoute";
 import NotAuthorizedRoute from "./component/NotAuthorizedRoute";
+import Cabinet from "./pages/Cabinet";
 
 function App() {
-  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+  // const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
   return (
     <BrowserRouter>
       <Navbar />
       <Switch>
         <AuthorizedRoute exact path="/" component={Home} />
+        <AuthorizedRoute path="/home" component={Home} />
+        <AuthorizedRoute path="/cabinet" component={Cabinet} />
         <NotAuthorizedRoute path="/login" component={Login} />
         <NotAuthorizedRoute path="/reg" component={Reg} />
       </Switch>

@@ -1,7 +1,8 @@
 import React, { useContext } from "react";
 import { Login } from "./Login";
 import { AuthContext } from "../context/AuthContext";
-import { Redirect } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
+import userMemoTable from "../Data/Users";
 
 const Home = () => {
   const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
@@ -11,7 +12,9 @@ const Home = () => {
 
   return (
     <div>      
-      <h1>Home</h1>
+      <h1>Добро пожаловать</h1>
+      <p>Зарегестрированно всего {userMemoTable.users.length} пользователей</p>
+      <p>Перейти в <Link to="cabinet">личный кабинет</Link></p>
     </div>
   );
 };

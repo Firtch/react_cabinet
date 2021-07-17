@@ -18,17 +18,23 @@ export class AuthContextProvider extends React.Component {
     const { isLoggedIn, authUser } = this.state;
     const setIsLoggedIn = this.setIsLoggedIn;
 
-    if (authUser.get("user")) {
-      const user = authUser.get("user");
-      if (!isLoggedIn) {
+    const user = authUser.get("user");
+    console.log("USER", user);
+    if(user && !isLoggedIn) {
         setIsLoggedIn(true);
-      }
-      console.log(user);
-    } else {
-      if (isLoggedIn) {
-        setIsLoggedIn(false);
-      }
     }
+
+    // if (authUser.get("user")) {
+    //   const user = authUser.get("user");
+    //   if (!isLoggedIn) {
+    //     setIsLoggedIn(true);
+    //   }
+    //   console.log(user);
+    // } else {
+    //   if (isLoggedIn) {
+    //     setIsLoggedIn(false);
+    //   }
+    // }
 
     return (
       <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>

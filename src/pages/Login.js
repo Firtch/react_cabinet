@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useReducer, useEffect } from "react";
 import { MainContainer } from "../component/MainContainer";
 import { Form } from "../component/Form";
 import { Button, makeStyles, Typography } from "@material-ui/core";
@@ -6,10 +6,12 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { Input } from "../component/Input";
-import { NavLink } from "react-router-dom";
-import { checkUser } from "../Data/Users";
+import { NavLink, useHistory, useLocation, useParams } from "react-router-dom";
+import { fakeAuthUser } from "../Data/Users";
 import Cookies from "universal-cookie";
 import { AuthContext } from "../context/AuthContext";
+import { useSelector, useDispatch } from "react-redux";
+import { LOGIN, changeLogin, loginReducer, selectLoginForm } from "../index";
 
 const useStylesForBtns = makeStyles((theme) => ({
   root: {
@@ -23,17 +25,20 @@ const schema = yup.object().shape({
   username: yup
     .string()
     .matches(
-      /^([A-Za-z]*)$/,
-      "Имя пользователя должно содержать только буквы латинского алфавита"
+      /^([A-Za-z0-9]*)$/,
+      "Имя пользователя может содержать, только буквы латинского алфавита и цифры"
     )
     .required("Необходимо ввести имя пользователя"),
   password: yup
     .string()
-    // .min(5, "Пароль должен содержать минимум 5 символов")
     .required("Вы забыли ввести пароль"),
 });
 
 export function Login() {
+
+  const defaultValues = useSelector(selectLoginForm);
+  const dispatch = useDispatch();
+
   const cookies = new Cookies();
   const { setIsLoggedIn } = useContext(AuthContext);
   const btnClasses = useStylesForBtns();
@@ -43,20 +48,27 @@ export function Login() {
     handleSubmit,
     formState: { errors },
   } = useForm({
+    defaultValues,
     mode: "onBlur",
     resolver: yupResolver(schema),
   });
+  const registered = useLocation().search.includes("registered");
+  const history = useHistory();
 
-  const onSubmit = (data) => {
-    console.log(data, checkUser(data));
-    if (checkUser(data).length < 1) {
+  // useEffect(()=>{
+  //   console.log("defaultValues: ", defaultValues);
+  // }, [defaultValues])
+
+  const onSubmit = (LoginFormData) => {   
+    const authData = dispatch(changeLogin(LoginFormData));        
+    const user = fakeAuthUser(authData.payload, setIsLoggedIn);    
+    if(!user) {     
       setLoginError(true);
     } else {
-      cookies.set("user", checkUser(data)[0]);
-      setIsLoggedIn(true);
       setLoginError(false);
     }
-  };
+    history.push("/login")    
+  };  
 
   return (
     <MainContainer>
@@ -64,6 +76,9 @@ export function Login() {
         Авторизация
         {loginError && (
           <p className="error">Имя пользователя или пароль не правельные</p>
+        )}
+        {registered && (
+          <p className="success">Спасибо за регистрацию, Вы можете войти</p>
         )}
       </Typography>
       <Form onSubmit={handleSubmit(onSubmit)}>
@@ -73,6 +88,7 @@ export function Login() {
           type="text"
           label="Имя пользователя"
           name="username"
+          fullWidth
           error={!!errors.username}
           helperText={errors?.username?.message}
         />
@@ -82,15 +98,16 @@ export function Login() {
           type="password"
           label="Пароль"
           name="password"
+          fullWidth
           error={!!errors.password}
           helperText={errors?.password?.message}
         />
         <div className={btnClasses.root}>
-          <Button type="submit" variant="contained" color="default">
+          <Button type="submit" variant="contained" color="primary">
             Войти
           </Button>
           <NavLink to="/reg" className="link">
-            <Button variant="contained" color="primary">
+            <Button variant="contained" color="default">
               Регистрация
             </Button>
           </NavLink>
